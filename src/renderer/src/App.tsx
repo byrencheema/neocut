@@ -1,7 +1,7 @@
 import { memo, useEffect, useState, useCallback, useRef, useMemo, CSSProperties, ReactEventHandler, FocusEventHandler } from 'react';
 import { FaAngleLeft, FaRegTimesCircle } from 'react-icons/fa';
 import { MdRotate90DegreesCcw } from 'react-icons/md';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ThemeProvider } from 'evergreen-ui';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -102,7 +102,7 @@ import { bottomStyle, videoStyle } from './styles';
 import styles from './App.module.css';
 import { DirectoryAccessDeclinedError } from '../errors';
 
-import { ChatBox } from './components/ChatBox';
+import ChatBox from './components/ChatBox';
 
 const electron = window.require('electron');
 const { exists } = window.require('fs-extra');
@@ -2273,6 +2273,9 @@ function App() {
     }, i18n.t('Failed to export project'));
   }, [checkFileOpened, customOutDir, filePath, getFrameCount, selectedSegments]);
 
+  const [showChatBox, setShowChatBox] = useState(false);
+const toggleChatBox = useCallback(() => setShowChatBox(v => !v), []);
+
   const importEdlFile = useCallback(async (type: EdlImportType) => {
     if (!checkFileOpened()) return;
 
@@ -2603,9 +2606,12 @@ function App() {
                       onEditSegmentTags={onEditSegmentTags}
                     />
                   )}
+               <div style={{ width: '300px', borderLeft: '1px solid var(--gray6)', overflow: 'hidden' }}>
+                  <ChatBox />
+                </div>
                 </AnimatePresence>
               </div>
-
+              
               <div className="no-user-select" style={bottomStyle}>
                 <Timeline
                   shouldShowKeyframes={shouldShowKeyframes}
@@ -2754,6 +2760,7 @@ function App() {
               <AnimatePresence>
                 {working && <Working text={working.text} progress={progress} onAbortClick={abortWorking} />}
               </AnimatePresence>
+
             </div>
           </ThemeProvider>
         </UserSettingsContext.Provider>

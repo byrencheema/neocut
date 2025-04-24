@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import styles from './ChatBox.module.css';
 
 interface Message {
@@ -54,4 +54,4 @@ const ChatBox: React.FC = () => {
   );
 };
 
-export default ChatBox;
+export default memo(ChatBox);
