@@ -102,6 +102,8 @@ import { bottomStyle, videoStyle } from './styles';
 import styles from './App.module.css';
 import { DirectoryAccessDeclinedError } from '../errors';
 
+import { ChatBox } from './components/ChatBox';
+
 const electron = window.require('electron');
 const { exists } = window.require('fs-extra');
 const { lstat } = window.require('fs/promises');
